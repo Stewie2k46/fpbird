@@ -4,10 +4,9 @@ phases:
   install:
     commands:
       - echo Installing Python and dependencies...
-      - powershell Install-PackageProvider -Name NuGet -Force
-      - powershell Install-Module -Name PowerShellGet -Force -AllowClobber
-      - powershell Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-      - powershell Install-Package -Name python -Source chocolatey -Force
+      - powershell -ExecutionPolicy Bypass Install-PackageProvider -Name NuGet -Force
+      - powershell -ExecutionPolicy Bypass Install-Module -Name PowerShellGet -Force -AllowClobber
+      - powershell -ExecutionPolicy Bypass Install-Package -Name python -Source chocolatey -Force
       - python --version
       - pip install --upgrade pip
       - pip install pyinstaller
