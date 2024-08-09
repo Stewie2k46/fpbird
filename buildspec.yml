@@ -1,0 +1,26 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Installing Docker...
+      - apt-get update
+      - apt-get install -y docker.io
+      - service docker start
+
+  build:
+    commands:
+      - echo Building Docker image...
+      - docker build -t flappy_bird_build .
+
+      - echo Running the Docker container to build the .exe...
+      - docker run --rm -v $(pwd)/dist:/usr/src/app/dist flappy_bird_build
+
+  post_build:
+    commands:
+      - echo Uploading .exe to S3...
+      - aws s3 cp dist/flappy_bird.exe s3://builddb/game/
+
+artifacts:
+  files:
+    - dist/flappy_bird.exe
